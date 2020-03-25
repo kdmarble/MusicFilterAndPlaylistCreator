@@ -30,7 +30,7 @@ class App extends React.Component {
     this.state = {
       token: null,
       authenticated: false,
-      url: `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=${redirect_uri}&scope=${scopes.join("%20")}&show_dialog=true`
+      url: `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=${redirect_uri}&scope=${scopes.join("%20")}&show_dialog=false`
     }
 }
 
@@ -45,9 +45,11 @@ class App extends React.Component {
     return (
       <div className="App">
         {!this.state.token && (
-          <a href={this.state.url}>Load Songs</a>
+          <a href={this.state.url} target="_parent" rel="noopener noreferrer">Sign in to Spotify</a>
         )}
-        <LoadSongs token={this.state.token} authenticated={this.state.authenticated}/>
+        {this.state.token && (
+          <LoadSongs token={this.state.token} authenticated={this.state.authenticated}/>
+        )}
       </div>
     )
   }

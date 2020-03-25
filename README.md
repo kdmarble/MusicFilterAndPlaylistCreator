@@ -1,8 +1,5 @@
 # TODO:
-- List all track names returned
-- Create table of tracks with artist/album info
-- Create interface for search criteria
-- Implement dynamic search criteria
+- Styling
 - Create interface for playlists
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
