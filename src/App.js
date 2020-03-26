@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import LoadSongs from './LoadSongs.js';
+import Button from 'react-bootstrap/Button';
 
 const hash = window.location.hash
   .substring(1)
@@ -44,9 +45,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {!this.state.token && (
-          <a href={this.state.url} target="_parent" rel="noopener noreferrer">Sign in to Spotify</a>
-        )}
+        <div>
+          {!this.state.token && (
+            <Button variant="success" size="lg" href={this.state.url} target="_parent" rel="noopener noreferrer">Sign in to Spotify</Button>
+          )}
+        </div>
         {this.state.token && (
           <LoadSongs token={this.state.token} authenticated={this.state.authenticated}/>
         )}

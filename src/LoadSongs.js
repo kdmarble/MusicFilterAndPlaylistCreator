@@ -1,5 +1,12 @@
 import React from 'react';
 import SongItem from './SongItem';
+import './LoadSongs.css'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
 
 class LoadSongs extends React.Component {
     constructor(props) {
@@ -84,95 +91,136 @@ class LoadSongs extends React.Component {
 
     render() {
         return (
-            <div>
-                <form>
-                    <label>
+            <div className="LoadSongs">
+                <Form>
+
+                    <Form.Label as={Col}>
                         Limit:
-                        <input type="range" min="1" max="100" name="limit" value={this.state.formValues["limit"]} onChange={this.handleChange} />
+                        <Form.Control size="sm" type="range" min="1" max="100" name="limit" value={this.state.formValues["limit"]} onChange={this.handleChange} />
                         {this.state.formValues["limit"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
+                    
+                    <Form.Group as={Col}>
+                        <Form.Label>
+                            <Accordion>
+                                <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey="0">
+                                Genres (Only the first 5 checked will be accepted):
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="0">
+                                    <Container>
+                                    <Card.Body>
+                                    {this.state.genres.map((genre) => {
+                                        return (
+                                            <>
+                                            <Col>
+                                            <span>  </span>
+                                            <input type="checkbox" onChange={this.selectGenres} value={genre} />
+                                            <span>  </span>
+                                            <Form.Label> {genre} </Form.Label>
+                                            <span>  </span>
+                                            </Col>
+                                            </>
+                                        )
+                                    })}
+                                    </Card.Body>
+                                    </Container>
+                                </Accordion.Collapse>
+                                </Card>
+                            </Accordion>
+                        </Form.Label>
+                    </Form.Group>
+                    <br />
+                    <br />
 
-                    <label>
-                        Genres (Only the first 5 checked will be accepted):
-                        {this.state.genres.map((genre) => {
-                            return (
-                                <>
-                                <input type="checkbox" onChange={this.selectGenres} value={genre} />
-                                <label>{genre}</label>
-                                </>
-                            )
-                        })}
-
-                    </label>
-
-                    <label>
+                    <Form.Label as={Col}>
                         Acousticness (1 means track is acoustic): 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_acousticness" value={this.state.formValues["target_acousticness"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_acousticness" value={this.state.formValues["target_acousticness"]} onChange={this.handleChange} />
                         {this.state.formValues["target_acousticness"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Danceability: 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_danceability" value={this.state.formValues["target_danceability"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_danceability" value={this.state.formValues["target_danceability"]} onChange={this.handleChange} />
                         {this.state.formValues["target_danceability"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Energy: 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_energy" value={this.state.formValues["target_energy"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_energy" value={this.state.formValues["target_energy"]} onChange={this.handleChange} />
                         {this.state.formValues["target_energy"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Instrumentalness (values above 0.5 are intended to represent instrumental tracks): 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_instrumentalness" value={this.state.formValues["target_instrumentalness"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_instrumentalness" value={this.state.formValues["target_instrumentalness"]} onChange={this.handleChange} />
                         {this.state.formValues["target_instrumentalness"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Liveness (Whether a track is performed live or not): 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_liveness" value={this.state.formValues["target_liveness"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_liveness" value={this.state.formValues["target_liveness"]} onChange={this.handleChange} />
                         {this.state.formValues["target_liveness"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Popularity: 
-                        <input type="range" min="0" max="100" name="target_popularity" value={this.state.formValues["target_popularity"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0" max="100" name="target_popularity" value={this.state.formValues["target_popularity"]} onChange={this.handleChange} />
                         {this.state.formValues["target_popularity"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Speechiness (A value greater than 0.6 describes mostly spoken word, rap lies between 0.3 and 0.6, and below 0.3 most likely represents music and other non-speech-like tracks): 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_speechiness" value={this.state.formValues["target_speechiness"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_speechiness" value={this.state.formValues["target_speechiness"]} onChange={this.handleChange} />
                         {this.state.formValues["target_speechiness"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Tempo: 
-                        <input type="range" min="0" max="200" name="target_tempo" value={this.state.formValues["target_tempo"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0" max="200" name="target_tempo" value={this.state.formValues["target_tempo"]} onChange={this.handleChange} />
                         {this.state.formValues["target_tempo"]}
-                    </label>
+                    </Form.Label>
+                    <br />
+                    <br />
 
-                    <label>
+                    <Form.Label as={Col}>
                         Valence (how happy the track sounds): 
-                        <input type="range" min="0.0" max="1.0" step="0.1" name="target_valence" value={this.state.formValues["target_valence"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_valence" value={this.state.formValues["target_valence"]} onChange={this.handleChange} />
                         {this.state.formValues["target_valence"]}
-                    </label>
+                    </Form.Label>
+                </Form>
+    
+                <div className="SongList">
+                    <Button variant="success" size="lg" onClick={ () => this.loadSongs(this.props.token)}>Load Songs</Button>
 
-                </form>
+                    <p>~~~~~~~~</p>
 
-                <button onClick={ () => this.loadSongs(this.props.token)}>Load Songs</button>
-                <p>~~~~~~~~</p>
-                <div>
-                {this.state.tracks && (
-                    this.state.tracks.map((track) => {
-                        return (
-                        <SongItem track={track} />
-                        )
-                    })
-                )}</div>
-                <p>~~~~~~~~</p>
+                    {this.state.tracks && (
+                        this.state.tracks.map((track) => {
+                            return (
+                            <SongItem track={track} />
+                            )
+                        })
+                    )}
 
+                    <p>~~~~~~~~</p>
+                </div>
 
             </div>
         )

@@ -1,6 +1,7 @@
 # TODO:
-- Styling
 - Create interface for playlists
+- Explore idea of creating server side auth/persistance
+- Figure out why "acoustic" genre will check when clicking anywhere in "genre" selector
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
