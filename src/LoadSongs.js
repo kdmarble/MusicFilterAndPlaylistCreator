@@ -85,9 +85,33 @@ class LoadSongs extends React.Component {
         }
     }
 
+    resetForm() {
+        this.setState(state => {
+            return {
+                tracks: null,
+                genre_limit: 5,
+                seed_genres: [],
+                genres: state.genres,
+                formValues: {
+                    limit: 1,
+                    target_acousticness: 0.5,
+                    target_danceability: 0.5,
+                    target_energy: 0.5,
+                    target_instrumentalness: 0.1,
+                    target_liveness: 0.1,
+                    target_popularity: 100,
+                    target_speechiness: 0.55,
+                    target_tempo: 140,
+                    target_valence: 0.5
+                }
+            }
+        })
+    }
+
     componentDidMount() {
         this.loadGenres(this.props.token);
     }
+
 
     render() {
         return (
@@ -207,6 +231,8 @@ class LoadSongs extends React.Component {
                 </Form>
     
                 <div className="SongList">
+                    <Button variant="outline-success" size="lg" onClick={ () => this.resetForm()}>Reset Form</Button>
+
                     <Button variant="success" size="lg" onClick={ () => this.loadSongs(this.props.token)}>Load Songs</Button>
 
                     <p>~~~~~~~~</p>

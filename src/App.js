@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import LoadSongs from './LoadSongs.js';
 import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
 
 const hash = window.location.hash
   .substring(1)
@@ -45,6 +46,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Navbar fixed="top" bg="dark" variant="dark">
+          <Navbar.Brand>
+            Spotify Browser
+          </Navbar.Brand>
+        </Navbar>
         <div>
           {!this.state.token && (
             <Button variant="success" size="lg" href={this.state.url} target="_parent" rel="noopener noreferrer">Sign in to Spotify</Button>
