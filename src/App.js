@@ -46,9 +46,16 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navbar fixed="top" bg="dark" variant="dark">
+        <Navbar expanded="sm" fixed="top" bg="dark" variant="dark">
           <Navbar.Brand>
-            Spotify Browser
+          <img
+            alt="Spotify Logo"
+            src={require("./Spotify_Icon_RGB_Green.png")}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+          />{' '}
+            Music Filter and Playlist Creator
           </Navbar.Brand>
         </Navbar>
         <div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import SongItem from './SongItem';
+import CreatePlaylist from './CreatePlaylist';
 import './LoadSongs.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -15,11 +16,14 @@ class LoadSongs extends React.Component {
         this.loadGenres = this.loadGenres.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.selectGenres = this.selectGenres.bind(this);
+        this.selectTracks = this.selectTracks.bind(this);
         this.state = {
             tracks: null,
             genre_limit: 5,
             seed_genres: [],
             genres: [],
+            user_id: null,
+            track_uris: [],
             formValues: {
                 limit: 1,
                 target_acousticness: 0.5,
@@ -28,7 +32,7 @@ class LoadSongs extends React.Component {
                 target_instrumentalness: 0.1,
                 target_liveness: 0.1,
                 target_popularity: 100,
-                target_speechiness: 0.55,
+                target_speechiness: 0.5,
                 target_tempo: 140,
                 target_valence: 0.5
             }
@@ -59,6 +63,18 @@ class LoadSongs extends React.Component {
         })
     }
 
+    loadUserID(token) {
+        fetch("https://api.spotify.com/v1/me", {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            this.setState({user_id: data["id"]})
+        })
+    }
+
     handleChange(event) {
         event.preventDefault()
         let formValues = this.state.formValues
@@ -71,7 +87,7 @@ class LoadSongs extends React.Component {
     }
 
     selectGenres(event) {
-        let isSelected = event.currentTarget.checked;
+        let isSelected = event.currentTarget.checked
         let value = event.target.value
         if (isSelected) {
             if(this.state.seed_genres.length < this.state.genre_limit) {
@@ -85,6 +101,19 @@ class LoadSongs extends React.Component {
         }
     }
 
+    selectTracks(event) {
+        let isSelected = event.currentTarget.checked;
+        let value = event.target.value
+        if (isSelected) {
+            this.setState({track_uris: [...this.state.track_uris, value]})
+        }
+        else {
+            this.setState({
+                track_uris: this.state.track_uris.filter((item)=>value!==item)
+            })
+        }
+    }
+
     resetForm() {
         this.setState(state => {
             return {
@@ -92,6 +121,7 @@ class LoadSongs extends React.Component {
                 genre_limit: 5,
                 seed_genres: [],
                 genres: state.genres,
+                user_id: state.user_id,
                 formValues: {
                     limit: 1,
                     target_acousticness: 0.5,
@@ -106,10 +136,15 @@ class LoadSongs extends React.Component {
                 }
             }
         })
+        let genreBoxes = document.querySelectorAll("input.genreCheck")
+        genreBoxes.forEach(box => {
+            box.checked = false
+        })
     }
 
     componentDidMount() {
         this.loadGenres(this.props.token);
+        this.loadUserID(this.props.token);
     }
 
 
@@ -119,38 +154,34 @@ class LoadSongs extends React.Component {
                 <Form>
 
                     <Form.Label as={Col}>
-                        Limit:
+                        Number of songs:
                         <Form.Control size="sm" type="range" min="1" max="100" name="limit" value={this.state.formValues["limit"]} onChange={this.handleChange} />
                         {this.state.formValues["limit"]}
                     </Form.Label>
                     <br />
                     <br />
                     
-                    <Form.Group as={Col}>
-                        <Form.Label>
+                    <Form.Group>
+                        <Form.Label as={Col}>
                             <Accordion>
                                 <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey="0">
-                                Genres (Only the first 5 checked will be accepted):
+                                Genres (Required Field. Only the first 5 checked will be accepted) <span className="arrow">&#x25BC;</span>
                                 </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">
-                                    <Container>
-                                    <Card.Body>
+                                    <Card.Body className="genreList">
                                     {this.state.genres.map((genre) => {
                                         return (
-                                            <>
-                                            <Col>
-                                            <span>  </span>
-                                            <input type="checkbox" onChange={this.selectGenres} value={genre} />
+                                            <React.Fragment key={genre}>
+                                            <div>
+                                            <input className="genreCheck" type="checkbox" onChange={this.selectGenres} value={genre} />
                                             <span>  </span>
                                             <Form.Label> {genre} </Form.Label>
-                                            <span>  </span>
-                                            </Col>
-                                            </>
+                                            </div>
+                                            </React.Fragment>
                                         )
                                     })}
                                     </Card.Body>
-                                    </Container>
                                 </Accordion.Collapse>
                                 </Card>
                             </Accordion>
@@ -192,7 +223,7 @@ class LoadSongs extends React.Component {
                     <br />
 
                     <Form.Label as={Col}>
-                        Liveness (Whether a track is performed live or not): 
+                        Liveness (The odds a track is performed live or not): 
                         <Form.Control type="range" min="0.0" max="1.0" step="0.1" name="target_liveness" value={this.state.formValues["target_liveness"]} onChange={this.handleChange} />
                         {this.state.formValues["target_liveness"]}
                     </Form.Label>
@@ -217,7 +248,7 @@ class LoadSongs extends React.Component {
 
                     <Form.Label as={Col}>
                         Tempo: 
-                        <Form.Control type="range" min="0" max="200" name="target_tempo" value={this.state.formValues["target_tempo"]} onChange={this.handleChange} />
+                        <Form.Control type="range" min="0" max="300" name="target_tempo" value={this.state.formValues["target_tempo"]} onChange={this.handleChange} />
                         {this.state.formValues["target_tempo"]}
                     </Form.Label>
                     <br />
@@ -236,15 +267,24 @@ class LoadSongs extends React.Component {
                     <Button variant="success" size="lg" onClick={ () => this.loadSongs(this.props.token)}>Load Songs</Button>
 
                     <p>~~~~~~~~</p>
+                    <p>Select songs to create a playlist</p>
 
+                    <div className="SongResults">
                     {this.state.tracks && (
                         this.state.tracks.map((track) => {
                             return (
-                            <SongItem track={track} />
+                                <React.Fragment key={track["uri"]}>
+                                <input type="checkbox" onChange={this.selectTracks} value={track["uri"]} />
+                                <SongItem track={track} />
+                                </React.Fragment>
                             )
                         })
                     )}
+                    </div>
 
+                    {this.state.track_uris.length > 0 && (
+                        <CreatePlaylist  track_uris={this.state.track_uris} token={this.props.token} user_id={this.state.user_id}/>
+                    )}
                     <p>~~~~~~~~</p>
                 </div>
 

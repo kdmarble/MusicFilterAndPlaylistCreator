@@ -1,0 +1,9 @@
+.CreatePlaylist {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 15px;
+}
+
+.CreatePlaylist > :last-child {
+    margin-top: 10px;
+}
