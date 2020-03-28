@@ -1,11 +1,10 @@
 import React from 'react';
 import SongItem from './SongItem';
 import CreatePlaylist from './CreatePlaylist';
-import './LoadSongs.css'
+import '../styles/LoadSongs.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 
@@ -17,6 +16,7 @@ class LoadSongs extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.selectGenres = this.selectGenres.bind(this);
         this.selectTracks = this.selectTracks.bind(this);
+        this.selectAllTracks = this.selectAllTracks.bind(this);
         this.state = {
             tracks: null,
             genre_limit: 5,
@@ -122,6 +122,7 @@ class LoadSongs extends React.Component {
                 seed_genres: [],
                 genres: state.genres,
                 user_id: state.user_id,
+                track_uris: [],
                 formValues: {
                     limit: 1,
                     target_acousticness: 0.5,
@@ -140,6 +141,28 @@ class LoadSongs extends React.Component {
         genreBoxes.forEach(box => {
             box.checked = false
         })
+    }
+
+    selectAllTracks(event) {
+        let isSelected = event.currentTarget.checked;
+        let trackBoxes = document.querySelectorAll(".trackBox")
+        let allTracks = []
+        if (this.state.tracks) {
+            if (isSelected) {
+                this.state.tracks.forEach((track) => {
+                    allTracks.push(track["uri"])
+                })
+                this.setState({track_uris: allTracks})
+                trackBoxes.forEach((track) => {
+                    track.checked = true;
+                })
+            } else {
+                this.setState({track_uris: []})
+                trackBoxes.forEach((track) => {
+                    track.checked = false;
+                })
+            }
+        }
     }
 
     componentDidMount() {
@@ -268,13 +291,16 @@ class LoadSongs extends React.Component {
 
                     <p>~~~~~~~~</p>
                     <p>Select songs to create a playlist</p>
-
+                    <div className="SelectAllSongs">
+                        <input type="checkbox" onChange={this.selectAllTracks} />
+                        <Form.Label>Select All Songs</Form.Label>
+                    </div>
                     <div className="SongResults">
                     {this.state.tracks && (
                         this.state.tracks.map((track) => {
                             return (
                                 <React.Fragment key={track["uri"]}>
-                                <input type="checkbox" onChange={this.selectTracks} value={track["uri"]} />
+                                <input className="trackBox" type="checkbox" onChange={this.selectTracks} value={track["uri"]} />
                                 <SongItem track={track} />
                                 </React.Fragment>
                             )

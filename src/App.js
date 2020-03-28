@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
-import LoadSongs from './LoadSongs.js';
+import './styles/App.css';
+import LoadSongs from './components/LoadSongs.js';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 

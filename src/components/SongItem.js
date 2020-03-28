@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
-import './SongItem.css'
+import '../styles/SongItem.css'
 
 const SongItem = ({track}) => {
     return (

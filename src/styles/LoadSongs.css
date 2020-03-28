@@ -14,13 +14,18 @@
     margin-top: 25px;
 }
 
-.SongResults {
+.SongResults, .SelectAllSongs {
     display: grid;
     grid-template-columns: 40px 1fr;
     grid-template-rows: 1fr;
 }
 
-.SongResults > input {
+.SelectAllSongs {
+    margin: 25px;
+    grid-gap: 15px;
+}
+
+input {
     box-shadow: -1px 6px 20px -5px rgba(117,133,118,0.5);
 }
 

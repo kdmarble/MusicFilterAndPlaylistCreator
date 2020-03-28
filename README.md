@@ -1,5 +1,4 @@
 # TODO:
-- Create select/deselect all box for song list
 - Explore idea of creating server side auth/persistance
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
