@@ -17,7 +17,7 @@ const hash = window.location.hash
   
 window.location.hash = "";
 
-const redirect_uri = "http://localhost:3000/"
+const redirect_uri = "https://condescending-leavitt-bf574b.netlify.com"
 const scopes = [
     "playlist-read-collaborative",
     "playlist-modify-private",
