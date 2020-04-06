@@ -1,10 +1,14 @@
 .SongItem {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template: 
+    [row1-start] "a b" 150px [row2-end]
+    [row2-start] "a c" 2em [row2-end] 
+    / 150px 15em;
+    overflow: hidden;
     grid-gap: 1em;
     padding: 15px;
-    margin-bottom: 20px;
-    margin-left: 30px;
+    margin-bottom: 15px;
     line-height: 15px;
     box-shadow: -1px 6px 20px -10px rgba(117,133,118,0.8);
     border-radius: 10px;
@@ -12,10 +16,66 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+    overflow-wrap: break-word;
 }
 
-li {
+.SongItem > img {
+    grid-area: a;
+    justify-self: stretch;
+    align-self: stretch;
+}
+
+.SongItem > li {
+    grid-area: b;
+    overflow: auto;
     list-style: none;
     margin-right: 10px;
     line-height: 25px;
+    justify-self: stretch;
+    align-self: stretch;
+    overflow-wrap: break-word;
+}
+
+.SongItem > button {
+    grid-area: c;
+}
+
+@media (max-width: 800px) {
+    .SongItem {
+        width: 11em;
+        display: grid;
+        grid-template: 
+        [row1-start] "a" 150px [row2-end]
+        [row2-start] "b" auto [row2-end] 
+        [row2-start] "c" auto [row2-end] 
+        / 150px;
+        margin-bottom: 15px;
+        line-height: 15px;
+        box-shadow: -1px 6px 20px -10px rgba(117,133,118,0.8);
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        overflow-wrap: break-word;
+    }
+
+    .SongItem > img {
+        grid-area: a;
+    }
+
+    .SongItem > li {
+        grid-area: b;
+        overflow: auto;
+        list-style: none;
+        margin-right: 10px;
+        line-height: 25px;
+        justify-self: stretch;
+        align-self: stretch;
+        overflow-wrap: break-word;
+    }
+    
+    .SongItem > button {
+        grid-area: c;
+    }
 }

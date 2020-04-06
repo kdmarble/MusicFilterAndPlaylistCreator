@@ -5,6 +5,7 @@ import '../styles/SongItem.css'
 const SongItem = ({track}) => {
     return (
     <div className="SongItem">
+        <img src={track["album"]["images"]["0"]["url"]} alt="album art"></img>
         <li key={track.id}>
         "{track.name}" by 
         {

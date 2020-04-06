@@ -40,6 +40,11 @@ class LoadSongs extends React.Component {
     }
 
     loadSongs(token) {
+        if (this.state.seed_genres.length < 1) {
+            alert("You must select at least one genre")
+            return
+        }
+
         fetch(`https://api.spotify.com/v1/recommendations?limit=${this.state.formValues["limit"]}&seed_genres=${this.state.seed_genres}&target_acousticness=${this.state.formValues["target_acousticness"]}&target_danceability=${this.state.formValues["target_danceability"]}&target_energy=${this.state.formValues["target_energy"]}&target_instrumentallness=${this.state.formValues["target_instrumentalness"]}&target_liveness=${this.state.formValues["target_liveness"]}&target_popularity=${this.state.formValues["target_popularity"]}&target_speechiness=${this.state.formValues["target_speechiness"]}&target_temp=${this.state.formValues["target_tempo"]}&target_valence=${this.state.formValues["target_valence"]}`, {
             headers: {
                 'Authorization': `Bearer ${token}`

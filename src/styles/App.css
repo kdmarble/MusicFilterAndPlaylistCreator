@@ -1,6 +1,24 @@
 .App {
   min-height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.copy {
+  text-align: center;
+  padding: 50px;
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .copy {
+    width: 100%;
+  }
 }

@@ -46,7 +46,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navbar expanded="sm" fixed="top" bg="dark" variant="dark">
+        <Navbar className="navbar" expanded="sm" fixed="top" bg="dark" variant="dark">
           <Navbar.Brand>
           <img
             alt="Spotify Logo"
@@ -60,7 +60,11 @@ class App extends React.Component {
         </Navbar>
         <div>
           {!this.state.token && (
-            <Button variant="success" size="lg" href={this.state.url} target="_parent" rel="noopener noreferrer">Sign in to Spotify</Button>
+            <div className="copy">
+              <h1>Music Filter and Playlist Creator</h1>
+              <p>This app will allow you to get a list of up to 100 songs suggested from Spotify based on their musical attributes. You can adjust and filter these musical attributes to get the exact type and feeling of the songs right. Then, you can select whichever songs you like, and create a playlist of these songs.</p>
+              <Button variant="success" size="lg" href={this.state.url} target="_parent" rel="noopener noreferrer">Sign in to Spotify</Button>
+            </div>
           )}
         </div>
         {this.state.token && (
